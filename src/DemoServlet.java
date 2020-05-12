@@ -36,7 +36,7 @@ public class DemoServlet extends HttpServlet {
             application.setAttribute("car_counter", getCarCount() + 1);
             System.out.println(getCarCount());
 
-            application.setAttribute("sum_time", getAvgParkingTime() + time);
+            application.setAttribute("avg_time", getAvgParkingTime() + (time / 1000));
             System.out.println(getAvgParkingTime());
         }
 
@@ -76,7 +76,8 @@ public class DemoServlet extends HttpServlet {
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
             ((DecimalFormat) numberFormat).applyPattern("###.##");
             String output = numberFormat.format(avgPrice);
-            out.println(output + " - " + avgTime);
+            out.println(output + " - " + avgTime + "s");
+
         } else {
             System.out.println("Invalid Command: " + request.getQueryString());
         }
@@ -110,7 +111,7 @@ public class DemoServlet extends HttpServlet {
     private Float getAvgParkingTime() {
         Float time;
         ServletContext application = getApplication();
-        time = (Float)application.getAttribute("sum_time");
+        time = (Float)application.getAttribute("avg_time");
         if(time == null) time = 0.0f;
         return time;
     }
