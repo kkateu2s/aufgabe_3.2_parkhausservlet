@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <!-- Define servlet, named DemoServlet as Parkhaus -->
+    <servlet>
+        <servlet-name>DemoServlet</servlet-name>
+        <servlet-class>DemoServlet</servlet-class>
+    </servlet>
+    <!-- Defines the path to access this DemoServlet -->
+    <servlet-mapping>
+        <servlet-name>DemoServlet</servlet-name>
+        <url-pattern>/DemoServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Define servlet, named DemoServlet1 -->
+    <servlet>
+        <servlet-name>DemoServlet1</servlet-name>
+        <servlet-class>DemoServlet1</servlet-class>
+    </servlet>
+    <!-- Defines the path to access this DemoServlet1 -->
+    <servlet-mapping>
+        <servlet-name>DemoServlet1</servlet-name>
+        <url-pattern>/DemoServlet1</url-pattern>
+    </servlet-mapping>
+
+    <!-- Define servlet, named DemoServlet2 -->
+    <servlet>
+        <servlet-name>DemoServlet2</servlet-name>
+        <servlet-class>DemoServlet2</servlet-class>
+    </servlet>
+
+    <!-- Defines the path to access this DemoServlet2 -->
+    <servlet-mapping>
+        <servlet-name>DemoServlet2</servlet-name>
+        <url-pattern>/DemoServlet2</url-pattern>
+    </servlet-mapping>
+
+</web-app>
