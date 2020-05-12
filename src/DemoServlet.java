@@ -36,7 +36,7 @@ public class DemoServlet extends HttpServlet {
             application.setAttribute("car_counter", getCarCount() + 1);
             System.out.println(getCarCount());
 
-            application.setAttribute("avg_time", getAvgParkingTime() + time);
+            application.setAttribute("sum_time", getAvgParkingTime() + time);
             System.out.println(getAvgParkingTime());
         }
 
@@ -67,15 +67,16 @@ public class DemoServlet extends HttpServlet {
             String output = numberFormat.format(sum);
             out.println(output);
         } else if ("cmd".equals(command) && "avg".equals(param)) {
-            Float avg = getPersistentSum() / getCarCount();
+            Float avgPrice = getPersistentSum() / getCarCount();
+            Float avgTime = getAvgParkingTime() / getCarCount();
 
             // Output Browser
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
             ((DecimalFormat) numberFormat).applyPattern("###.##");
-            String output = numberFormat.format(avg);
-            out.println(output + " - " + getAvgParkingTime());
+            String output = numberFormat.format(avgPrice);
+            out.println(output + " - " + avgTime);
         } else {
             System.out.println("Invalid Command: " + request.getQueryString());
         }
