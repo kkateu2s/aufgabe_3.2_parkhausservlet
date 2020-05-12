@@ -40,6 +40,11 @@ public class DemoServlet extends HttpServlet {
             System.out.println(getAvgParkingTime());
         }
 
+        if("occupied".equals(command)) {
+            ServletContext application = getApplication();
+            application.setAttribute("lost", getLostCars() + 1);
+        }
+
         /*
         for(int i = 0; i<query.length; i++) {
             System.out.println("Pos"+i+": "+query[i]);
@@ -77,7 +82,10 @@ public class DemoServlet extends HttpServlet {
             ((DecimalFormat) numberFormat).applyPattern("###.##");
             String output = numberFormat.format(avgPrice);
             out.println(output + " - " + avgTime + "s");
-
+        } else if ("cmd".equals(command) && "extra".equals(param)) {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println(getLostCars() + " Autos haben keinen Platz im Parkhaus gefunden!");
         } else {
             System.out.println("Invalid Command: " + request.getQueryString());
         }
@@ -95,6 +103,14 @@ public class DemoServlet extends HttpServlet {
         ServletContext application = getApplication();
         sum = (Float)application.getAttribute("sum");
         if(sum == null) sum = 0.0f;
+        return sum;
+    }
+
+    private Integer getLostCars() {
+        Integer sum;
+        ServletContext application = getApplication();
+        sum = (Integer) application.getAttribute("lost");
+        if(sum == null) sum = 0;
         return sum;
     }
 
