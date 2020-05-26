@@ -9,19 +9,18 @@
 <html>
   <head>
     <title>Parkhaus</title>
-    <script src="https://ccmjs.github.io/mkaul-components/parkhaus/versions/ccm.parkhaus-7.0.0.js";></script>
-
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://ccmjs.github.io/mkaul-components/parkhaus/versions/ccm.parkhaus-9.0.0.js";></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   </head>
   <body>
     <h1>Parkhaus</h1>
-    <ccm-parkhaus-7-0-0
+    <ccm-parkhaus-9-0-0
       server_url = "http://localhost:8080/DemoServlet1_war_exploded/DemoServlet"
-      name = "DemoParkhaus_slysek2s"
-      Max = "18"
-      simulation.max = "3"
-      simulation.enter = "2"
-      simulation.delay = "2"
-      extra_buttons= '["sum", "avg", "extra"]'>
-    </ccm-parkhaus-7-0-0>
+      name = "ParkhausServlet5"
+      client_categories='["any", "family", "female"]'
+      extra_buttons= '["sum", "avg", "extra"]'
+      extra_charts='["Barchart", "Piechart"]'>
+    </ccm-parkhaus-9-0-0>
   </body>
 </html>

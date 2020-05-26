@@ -37,5 +37,4 @@
         <servlet-name>DemoServlet2</servlet-name>
         <url-pattern>/DemoServlet2</url-pattern>
     </servlet-mapping>
-
 </web-app>

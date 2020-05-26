@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.json.*;
+
 
 @WebServlet(name = "/DemoServlet")
 public class DemoServlet extends HttpServlet {
@@ -20,36 +22,67 @@ public class DemoServlet extends HttpServlet {
         // Fetch Data
         String[] query = body.split(",");
         String command = query[0];
+        boolean status;
+
+        if("leave".equals(query[0])) {
+            status = false;
+        } else {
+            status = true;
+        }
 
         if("enter".equals(command)) {
             ServletContext application = getApplication();
-            // Insert upcoming code here
 
+
+            car newcar = new car(status, query[1], Long.parseLong(query[2]), query[5], query[8], query[6], Integer.parseInt(query[7]));
+            newcar.appendList(newcar);
+            System.out.println(car.returnTicket().toString()+ " SizeOfTicketList: " + car.numberToIndex.size());
+            System.out.println("SizeOfCarsList: " + car.cars.size());
         }
 
         if("leave".equals(command)) {
             ServletContext application = getApplication();
             Float price = Float.parseFloat(query[4]) / 100;
             Float time = Float.parseFloat(query[3]);
+            // Update die Summe
             application.setAttribute("sum", getPersistentSum()+ price);
-
+            // Update den car_counter
             application.setAttribute("car_counter", getCarCount() + 1);
-            System.out.println(getCarCount());
-
+            //System.out.println(getCarCount());
+            // Update die durchschnittliche Parkdauer
             application.setAttribute("avg_time", getAvgParkingTime() + (time / 1000));
-            System.out.println(getAvgParkingTime());
+            //System.out.println(getAvgParkingTime());
+            System.out.println("-----");
+
+            int index = car.returnIndex(query[1]);
+            car leavingCar = car.cars.get(index);
+
+            car leftcar = new car(status, query[1], leavingCar.einfahrtszeit, Long.parseLong(query[2]), query[5], query[8], query[6], Integer.parseInt(query[7]), price, time);
+            car.cars.set(index, leftcar);
+
+            System.out.println(car.returnCars());
+            //System.out.println(car.returnTicket().toString()+ " SizeOfTicketList: " + car.numberToIndex.size());
         }
 
         if("occupied".equals(command)) {
             ServletContext application = getApplication();
             application.setAttribute("lost", getLostCars() + 1);
+            //Diese Autos haben keinen Parkplatz gefunden und müssen aus der Car- und Index-Liste geloescht werden
+            String search = query[1].substring(4);
+            search = search.substring(0, search.length()-1);
+
+            int index = car.returnIndex(search);
+            //System.out.println("Returned index for "+ search +" : " + index);
+            car.cars.remove(index);
+            car.numberToIndex.remove(index);
+            //System.out.println(car.returnTicket().toString()+ " SizeOfTicketList: " + car.numberToIndex.size());
         }
 
-        /*
         for(int i = 0; i<query.length; i++) {
             System.out.println("Pos"+i+": "+query[i]);
         }
-        */
+        System.out.println("-----");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -86,6 +119,43 @@ public class DemoServlet extends HttpServlet {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
             out.println(getLostCars() + " Autos haben keinen Platz im Parkhaus gefunden!");
+        } else if("cmd".equals(command) && "Barchart".equals(param)){
+            response.setContentType("text/plain");
+            PrintWriter out = response.getWriter();
+
+            //values stehen in data[1], kategorien in data[0]
+            String[][] data = car.statDataBar();
+
+            // JSON-Statistikobjekt/String hier...
+            out.println("{\n" + " \"data\": [\n" + " {\n" +
+                    " \"x\": [\n" + " \"female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
+                    " \"y\": [\n" + data[1][0]+",\n" + data[1][1]+",\n" + data[1][2]+"\n" + " ],\n" +
+                    " \"type\": \"bar\"\n" + " }\n" + " ]\n" + "}");
+        } else if("cmd".equals(command) && "Piechart".equals(param)) {
+            response.setContentType("text/plain");
+            PrintWriter out = response.getWriter();
+            //values stehen in data[1], kategorien in data[0]
+            String[][] data = car.statDataPie();
+
+            // JSON-Statistikobjekt/String hier...
+            out.println("{\n" + " \"data\": [\n" + " {\n" +
+                    " \"labels\": [\n" + " \" female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
+                    " \"values\": [\n" + data[1][0]+",\n" + data[1][1]+",\n" + data[1][2]+"\n" + " ],\n" +
+                    " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
+
+            /*
+            JsonObject kategorieRoot = Json.createObjectBuilder()
+                    .add("data", Json.createArrayBuilder()
+                            .add(Json.createObjectBuilder()
+                                    .add("values", data[1])
+                                    .add("labels", data[0])
+                                    .add("type", "pie")
+                            )
+                    ).build();
+            System.out.println(kategorieRoot.toString());
+            out.println(kategorieRoot.toString());
+            //falls JSON String defekt -> ServerFehler 500 -> nix passiert
+             */
         } else {
             System.out.println("Invalid Command: " + request.getQueryString());
         }
