@@ -124,7 +124,7 @@ public class DemoServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             //values stehen in data[1], kategorien in data[0]
-            String[][] data = car.statDataBar();
+            String[][] data = statistik.statDataBarStream();
 
             // JSON-Statistikobjekt/String hier...
             out.println("{\n" + " \"data\": [\n" + " {\n" +
@@ -135,7 +135,7 @@ public class DemoServlet extends HttpServlet {
             response.setContentType("text/plain");
             PrintWriter out = response.getWriter();
             //values stehen in data[1], kategorien in data[0]
-            String[][] data = car.statDataPie();
+            String[][] data = statistik.statDataPieStream();
 
             // JSON-Statistikobjekt/String hier...
             out.println("{\n" + " \"data\": [\n" + " {\n" +

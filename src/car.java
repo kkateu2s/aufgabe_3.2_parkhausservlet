@@ -107,25 +107,4 @@ public class car {
         String[][] data = {kategorienamen, zahlen};
         return data;
     }
-
-    public static String[][] statDataBar() {
-        String[] kategorienamen = {"female", "any", "family"};
-        float[] kategoriezahlen = {0f,0f,0f};
-        for(int i=0; i<cars.size(); i++) {
-            car check = cars.get(i);
-            if(!check.status) {
-                if ("female".equals(check.type)) {
-                    kategoriezahlen[0] += check.preis;
-                } else if ("any".equals(check.type)) {
-                    kategoriezahlen[1] += check.preis;
-                } else {
-                    kategoriezahlen[2] += check.preis;
-                }
-            }
-        }
-        String[] zahlen = {Float.toString(kategoriezahlen[0]), Float.toString(kategoriezahlen[1]), Float.toString(kategoriezahlen[2])};
-
-        String[][] data = {kategorienamen, zahlen};
-        return data;
-    }
 }
