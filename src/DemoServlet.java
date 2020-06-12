@@ -137,25 +137,31 @@ public class DemoServlet extends HttpServlet {
             //values stehen in data[1], kategorien in data[0]
             String[][] data = statistik.statDataPieStream();
 
+            /*
+            JsonObject kategorieRoot = Json.createObjectBuilder()
+                    .add("data", Json.createArrayBuilder()
+                            .add(Json.createObjectBuilder()
+                                    .add("values", data[1][0])
+                                    .add("labels", data[0][0])
+                                    .add("type", "pie")
+                            )
+                    ).build();
+
+
+             */
+
+            //System.out.println(kategorieRoot.toString()); // debugging...
+
             // JSON-Statistikobjekt/String hier...
             out.println("{\n" + " \"data\": [\n" + " {\n" +
                     " \"labels\": [\n" + " \" female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
                     " \"values\": [\n" + data[1][0]+",\n" + data[1][1]+",\n" + data[1][2]+"\n" + " ],\n" +
                     " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
 
-            /*
-            JsonObject kategorieRoot = Json.createObjectBuilder()
-                    .add("data", Json.createArrayBuilder()
-                            .add(Json.createObjectBuilder()
-                                    .add("values", data[1])
-                                    .add("labels", data[0])
-                                    .add("type", "pie")
-                            )
-                    ).build();
-            System.out.println(kategorieRoot.toString());
-            out.println(kategorieRoot.toString());
-            //falls JSON String defekt -> ServerFehler 500 -> nix passiert
-             */
+            System.out.println("{\n" + " \"data\": [\n" + " {\n" +
+                    " \"labels\": [\n" + " \" female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
+                    " \"values\": [\n" + data[1][0]+",\n" + data[1][1]+",\n" + data[1][2]+"\n" + " ],\n" +
+                    " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
         } else {
             System.out.println("Invalid Command: " + request.getQueryString());
         }

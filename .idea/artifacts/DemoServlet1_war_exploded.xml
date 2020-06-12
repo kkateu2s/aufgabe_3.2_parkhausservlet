@@ -7,6 +7,9 @@
         <element id="directory" name="classes">
           <element id="module-output" name="DemoServlet1" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="javax.json:javax.json-api:1.1.4" />
+        </element>
       </element>
     </root>
   </artifact>

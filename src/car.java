@@ -86,25 +86,4 @@ public class car {
                 ", parkplatz=" + parkplatz +
                 '}';
     }
-
-    public static String[][] statDataPie() {
-
-        String[] kategorienamen = {"female", "any", "family"};
-        int[] kategoriezahlen = {0,0,0};
-
-        for(int i=0; i<cars.size(); i++) {
-            car check = cars.get(i);
-            if("female".equals(check.type)) {
-                kategoriezahlen[0]++;
-            }else if("any".equals(check.type)) {
-                kategoriezahlen[1]++;
-            } else {
-                kategoriezahlen[2]++;
-            }
-        }
-        String[] zahlen = {Integer.toString(kategoriezahlen[0]), Integer.toString(kategoriezahlen[1]), Integer.toString(kategoriezahlen[2])};
-
-        String[][] data = {kategorienamen, zahlen};
-        return data;
-    }
 }
