@@ -159,7 +159,7 @@ public class DemoServlet extends HttpServlet {
                     " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
 
             System.out.println("{\n" + " \"data\": [\n" + " {\n" +
-                    " \"labels\": [\n" + " \" female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
+                    " \"labels\": [\n" + " \"female\",\n" + " \"any\",\n" + " \"family\"\n" + " ],\n" +
                     " \"values\": [\n" + data[1][0]+",\n" + data[1][1]+",\n" + data[1][2]+"\n" + " ],\n" +
                     " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
         } else {
